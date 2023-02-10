@@ -1,5 +1,5 @@
-# ContentBoard-Blog-App
-We are working on a **project**
+# Content Board Blog App
 
 ❤️❤️❤️😊😊😂😂🤣🤣😒😒
 
+Our plan is to make a Web app which has e job board and content posting app
