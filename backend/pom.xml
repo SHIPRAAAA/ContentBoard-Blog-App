@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<!--<scope>runtime</scope> -->
+			<scope>runtime</scope>
 		</dependency>
 	
 
@@ -63,14 +63,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!--<configuration>
+				<configuration>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
-				</configuration> -->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
