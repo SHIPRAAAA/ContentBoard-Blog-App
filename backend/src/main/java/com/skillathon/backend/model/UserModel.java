@@ -14,29 +14,18 @@ import jakarta.persistence.GenerationType;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class UserModel {
-	
-	public UserModel() {
-		
-	}
-	
-	public UserModel(long id, String email, String password) {
-		
-		this.id = id;
-		this.email = email;
-		this.password = password;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private long id;
-	
+
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "password")
 	private String password;
-	
+
 }
