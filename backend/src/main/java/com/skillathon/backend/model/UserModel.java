@@ -17,9 +17,21 @@ import jakarta.persistence.GenerationType;
 @Table(name="user")
 public class UserModel {
 	
+	public UserModel() {
+		
+	}
+	
+	public UserModel(long id, String email, String password) {
+		
+		this.id = id;
+		this.email = email;
+		this.password = password;
+	}
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private long id;
 	
 	@Column(name = "email")
 	private String email;

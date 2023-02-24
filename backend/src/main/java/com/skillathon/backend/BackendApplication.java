@@ -21,10 +21,10 @@ public class BackendApplication {
 		return "hello " + name + ", your application is working";
 	}*/ // Parameter passed
 	
-	@GetMapping(value="/")
+	/*@GetMapping(value="/")
 	public String demo() {
 		return "your application is working";
-	}
+	} */
 }
 
 
