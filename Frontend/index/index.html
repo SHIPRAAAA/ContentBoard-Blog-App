@@ -72,13 +72,13 @@
     </form>
     <script>
       const url = "http://localhost:8080/user";
-      $("#login").click(function () {
+      $("#login").click(() => {
         let email = $("#email").val();
         let pass = $("#password").val();
         if (validateEmail(email) && pass.length > 3) {
           $("#error").text("");
           console.log(`${email} and passwprd is ${pass}`);
-          $.get(url, function (data, status) {
+          $.get(url, (data, status) => {
             console.log(status);
             console.log(data);
           });
