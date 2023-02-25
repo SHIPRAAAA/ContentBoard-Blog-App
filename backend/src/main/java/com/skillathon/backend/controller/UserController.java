@@ -23,43 +23,43 @@ import com.skillathon.backend.service.UserService;
 @RequestMapping("/user")
 public class UserController {
 
-	/*@GetMapping
-	public String Getalluser() {
-		return "I am working ";
-	}*/
-	
+	/*
+	 * @GetMapping
+	 * public String Getalluser() {
+	 * return "I am working ";
+	 * }
+	 */
+
 	@Autowired
 	private UserService userService;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<UserModel> getAllUser(){
+	public List<UserModel> getAllUser() {
 		return userService.getAllUser();
 	}
-	
+
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public UserModel getUserById(@PathVariable long id) {
 		return userService.getUserById(id);
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
 	public UserModel addUser(@RequestBody UserModel user) {
 		return userService.addUser(user);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteUserById(@PathVariable long id) {
 		userService.deleteUser(id);
 	}
-	
+
 	@PutMapping
 	@ResponseStatus(HttpStatus.OK)
 	public UserModel updateUser(@RequestBody UserModel user) {
 		return userService.updateUser(user);
 	}
 }
-
-
