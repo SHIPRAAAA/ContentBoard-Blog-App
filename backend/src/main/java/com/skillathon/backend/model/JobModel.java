@@ -14,30 +14,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="job")
+@Table(name = "job")
 public class JobModel {
-	
-	public JobModel() {
-		
-	}
-	
-	public JobModel(long id, String email, String password) {
-		
-		this.id = id;
-		this.email = email;
-		this.password = password;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private long id;
-	
-	@Column(name = "email")
-	private String email;
-	
-	@Column(name = "password")
-	private String password;
-	
-}
 
+	@Column(name = "company", nullable = false)
+	private String company;
+
+	@Column(name = "jobTitle", nullable = false)
+	private String jobTitle;
+
+	@Column(name = "jobDescription", nullable = false)
+	private String jobDescription;
+
+	@Column(name = "salary", nullable = false)
+	private Integer salary;
+
+	@Column(name = "exp", nullable = false)
+	private Integer exp;
+
+}
