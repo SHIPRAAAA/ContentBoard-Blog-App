@@ -26,7 +26,7 @@ public class JobService {
 	}
 
 	public JobModel addJob(JobModel job) {
-		job.setId(jobRepository.findTopByOrderByDesc().getId() + 1);
+		job.setId(jobRepository.findTopByOrderByIdDesc().getId() + 1);
 		return jobRepository.save(job);
 	}
 

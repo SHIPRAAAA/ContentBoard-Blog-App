@@ -56,11 +56,6 @@
         width: 20rem;
       }
     </style>
-    <script>
-      $(window).load(() => {
-        if (localStorage.getItem("email")) window.location.href = "./job.html";
-      });
-    </script>
   </head>
   <body>
     <form action="" class="container">
@@ -70,7 +65,14 @@
       </div>
       <div class="form-group">
         <label for="">Password</label
-        ><input type="text" name="" class="form-control" id="password" />
+        ><input
+          type="text"
+          name=""
+          class="form-control"
+          id="password"
+          value=""
+          autocomplete="new-password"
+        />
       </div>
       <p id="error" class="text-danger"></p>
       <button type="button" class="btn btn-primary" id="login">Login</button>
@@ -79,6 +81,9 @@
       </button>
     </form>
     <script>
+      if (localStorage.getItem("email") !== null)
+        // window.location.href = "./job.html";
+        window.location.replace("./job.html");
       const url = "http://localhost:8080/user/login";
       $("#register").click(() => {
         window.location.href = "./register.html";
@@ -86,9 +91,10 @@
       $("#login").click(() => {
         let email = $("#email").val();
         let pass = $("#password").val();
+        console.log(pass);
         if (validateEmail(email) && pass.length > 3) {
           $("#error").text("");
-          postReq({ id: 1, email: email, password: `${password}` });
+          postReq({ id: 1, email: email, password: `${pass}` });
         } else {
           $("#error").text("Not a valid email address or password");
         }
@@ -103,11 +109,11 @@
       const postReq = ({ email, password }) => {
         $.ajax({
           contentType: "application/json",
-          success: (data) => {
-            console.log(data);
+          success: ({ id, email }) => {
             if (email.length > 2) {
               localStorage.setItem("id", id);
               localStorage.setItem("email", email);
+              window.location.reload();
             }
             // window.location.reload();
           },

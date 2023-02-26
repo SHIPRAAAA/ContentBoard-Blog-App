@@ -10,6 +10,6 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 	// List<UserModel> findByGenera(String genera);
 	public Optional<UserModel> findByEmail(String email);
 
-	UserModel findTopByOrderByDesc();
+	UserModel findTopByOrderByIdDesc();
 
 }

@@ -47,7 +47,7 @@ public class JobController {
 		return jobService.getJobById(id);
 	}
 
-	@PostMapping("")
+	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
 	public JobModel addJob(@RequestBody JobModel job) {
 		return jobService.addJob(job);

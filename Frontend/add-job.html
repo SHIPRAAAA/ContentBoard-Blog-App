@@ -16,6 +16,13 @@
       integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
       crossorigin="anonymous"
     ></script>
+    <script>
+      $(window).load(() => {
+        if (localStorage.getItem("email") == null) {
+          window.location.href = "./index.html";
+        }
+      });
+    </script>
     <style>
       * {
         box-sizing: border-box;
@@ -110,19 +117,18 @@
         <input type="number" name="exp" id="exp" class="exp" value="0" />
       </div>
       <p class="text text-danger" id="error"></p>
-      <button class="btn btn-primary">Add Job Details</button>
+      <button class="btn btn-primary" type="button">Add Job Details</button>
     </form>
     <script>
+      if (localStorage.getItem("email") == null) {
+        window.location.href = "./index.html";
+      }
       $("button").click(() => {
         let company = $("#company").val();
         let jobTitle = $("#jobTitle").val();
         let jobDescription = $("#jobDescription").val();
         let salary = $("#salary").val();
         let exp = $("#exp").val();
-        let jobs = JSON.parse(localStorage.getItem("job"));
-        if (jobs == null) jobs = [];
-        let id =
-          jobs[jobs.length - 1].id + 1 || Math.floor(Math.random() * 1000);
 
         if (
           company == "" ||
@@ -134,26 +140,28 @@
           $("#error").text("Please fill all the fields");
         } else {
           addData({
-            id: id,
+            id: 1,
             company: company,
             jobTitle: jobTitle,
             jobDescription: jobDescription,
             salary: salary,
             exp: exp,
+            email: localStorage.getItem("email"),
           });
+          $("#error").text("Job Details Added Successfully");
+          $("#company").val("");
+          $("#jobTitle").val("");
+          $("#jobDescription").val("");
+          $("#salary").val(10000);
+          $("#exp").val(0);
         }
       });
-      const addData = () =>
+      const addData = (data) =>
         $.ajax({
-          url: "http://localhost:8080/jobs",
+          contentType: "application/json",
+          url: "http://localhost:8080/job",
           type: "POST",
-          data: {
-            company: $("#company").val(),
-            jobTitle: $("#jobTitle").val(),
-            jobDescription: $("#jobDescription").val(),
-            salary: $("#salary").val(),
-            exp: $("#exp").val(),
-          },
+          data: JSON.stringify(data),
           success: function (data) {
             console.log(data);
           },

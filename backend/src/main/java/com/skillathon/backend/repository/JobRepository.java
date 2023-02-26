@@ -11,5 +11,5 @@ public interface JobRepository extends JpaRepository<JobModel, Long> {
     // JobModel findByJobDescription(String jobDescription);
     // JobModel findBySalary(Integer salary);
     // JobModel findByExp(Integer exp);
-    JobModel findTopByOrderByDesc();
+    JobModel findTopByOrderByIdDesc();
 }

@@ -67,27 +67,46 @@
     <form action="" class="container">
       <div class="form-group">
         <label for="">Email</label
-        ><input type="email" class="form-control" name="" id="email" />
+        ><input
+          type="email"
+          class="form-control"
+          name=""
+          id="email"
+          autocomplete="email"
+        />
       </div>
       <div class="form-group">
         <label for="">Password</label
         ><input
-          type="password"
-          name="password "
+          type="text"
+          name=""
           class="form-control"
           id="password"
+          value=""
+          autocomplete="new-password"
         />
       </div>
       <div class="form-group">
         <label for="">Enter Password again</label
-        ><input type="password" name="" class="form-control" id="current" />
+        ><input
+          type="text"
+          name=""
+          class="form-control"
+          id="current"
+          value=""
+        />
       </div>
       <p id="error" class="text-danger"></p>
       <button type="button" class="btn btn-primary" id="register">
         Register
       </button>
+      <a href="./index.html" type="button" class="btn btn-primary" id="login">
+        Login here
+      </a>
     </form>
     <script>
+      if (localStorage.getItem("email").length > 0)
+        window.location.replace("./job.html");
       const url = "http://localhost:8080/user";
       $("#register").click(() => {
         let email = $("#email").val();
@@ -95,7 +114,6 @@
         let secpass = $("#current").val();
         if (validateEmail(email) && pass.length > 3 && pass === secpass) {
           $("#error").text("");
-          console.log(`${email} `);
           postReq({ id: null, email: `${email}`, password: `${password}` });
         } else {
           $("#error").text("Not a valid email address or password");
@@ -119,6 +137,7 @@
           success: ({ id, email }) => {
             localStorage.setItem("id", id);
             localStorage.setItem("email", email);
+            window.location.reload();
           },
           error: (error) => $("#error").html(error),
           processData: false,
