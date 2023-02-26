@@ -56,6 +56,12 @@
         width: 20rem;
       }
     </style>
+
+    <script>
+      $(window).load(() => {
+        if (localStorage.getItem("email")) window.location.href = "./job";
+      });
+    </script>
   </head>
   <body>
     <form action="" class="container">
@@ -72,21 +78,20 @@
         ><input type="password" name="" class="form-control" id="current" />
       </div>
       <p id="error" class="text-danger"></p>
-      <button type="button" class="btn btn-primary" id="login">Login</button>
+      <button type="button" class="btn btn-primary" id="register">
+        Register
+      </button>
     </form>
     <script>
-      onkeyup = (e) => {
-        console.log();
-      };
-      $("#login").click(() => {
+      const url = "http://localhost:8080/user";
+      $("#register").click(() => {
         let email = $("#email").val();
         let pass = $("#password").val();
         let secpass = $("#current").val();
         if (validateEmail(email) && pass.length > 3 && pass === secpass) {
           $("#error").text("");
-          console.log(
-            `${email} and password is ${pass} and second password is ${secpass}`
-          );
+          console.log(`${email} `);
+          postReq({ id: 1, email: email, password: `${password}` });
         } else {
           $("#error").text("Not a valid email address or password");
         }
@@ -100,6 +105,21 @@
           .match(
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           );
+      };
+
+      const postReq = (data) => {
+        $.ajax({
+          contentType: "application/json",
+          data: JSON.stringify(data),
+          success: ({ id, email }) => {
+            localStorage.setItem("id", id);
+            localStorage.setItem("email", email);
+          },
+          error: (error) => $("#error").html(error),
+          processData: false,
+          type: "POST",
+          url: url,
+        });
       };
     </script>
   </body>

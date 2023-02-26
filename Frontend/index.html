@@ -69,15 +69,21 @@
       </div>
       <p id="error" class="text-danger"></p>
       <button type="button" class="btn btn-primary" id="login">Login</button>
+      <button type="button" class="btn btn-primary" id="register">
+        Register here
+      </button>
     </form>
     <script>
       const url = "http://localhost:8080/user";
+      $("#register").click(() => {
+        window.location.href = "./register.html";
+      });
       $("#login").click(() => {
         let email = $("#email").val();
         let pass = $("#password").val();
         if (validateEmail(email) && pass.length > 3) {
           $("#error").text("");
-          console.log(`${email} and passwprd is ${pass}`);
+          console.log(`${email} and password is ${pass}`);
           $.get(url, (data, status) => {
             console.log(status);
             console.log(data);

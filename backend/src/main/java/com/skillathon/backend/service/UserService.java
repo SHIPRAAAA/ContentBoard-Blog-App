@@ -16,16 +16,24 @@ public class UserService {
 	private final UserRepository userRepository;
 
 	public List<UserModel> getAllUser() {
-		return userRepository.findAll();
+		List<UserModel> userList = userRepository.findAll();
+		for (UserModel user : userList) {
+			user.setPassword(null);
+		}
+		return userList;
 
 	}
 
 	public UserModel getUserById(long id) {
-		return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Not Found" + id));
+		UserModel user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Not Found" + id));
+		user.setPassword(null);
+		return user;
 	}
 
 	public UserModel addUser(UserModel user) {
-		return userRepository.save(user);
+		UserModel userCreated = userRepository.save(user);
+		userCreated.setPassword(null);
+		return userCreated;
 	}
 
 	public void deleteUser(long id) {
@@ -34,6 +42,6 @@ public class UserService {
 	}
 
 	public UserModel updateUser(UserModel user) {
-		return userRepository.save(user);
+		return addUser(user);
 	}
 }

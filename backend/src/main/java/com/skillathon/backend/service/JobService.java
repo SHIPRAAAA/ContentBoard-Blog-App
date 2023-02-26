@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.skillathon.backend.model.JobModel;
 import com.skillathon.backend.repository.JobRepository;
@@ -35,6 +36,6 @@ public class JobService {
 	}
 
 	public JobModel updateJob(JobModel job) {
-		return jobRepository.save(job);
+		return addJob(job);
 	}
 }
