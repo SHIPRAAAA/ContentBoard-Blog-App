@@ -56,6 +56,11 @@
         width: 20rem;
       }
     </style>
+    <script>
+      $(window).load(() => {
+        if (localStorage.getItem("email")) window.location.href = "./job.html";
+      });
+    </script>
   </head>
   <body>
     <form action="" class="container">
@@ -65,7 +70,7 @@
       </div>
       <div class="form-group">
         <label for="">Password</label
-        ><input type="password" name="" class="form-control" id="password" />
+        ><input type="text" name="" class="form-control" id="password" />
       </div>
       <p id="error" class="text-danger"></p>
       <button type="button" class="btn btn-primary" id="login">Login</button>
@@ -74,7 +79,7 @@
       </button>
     </form>
     <script>
-      const url = "http://localhost:8080/user";
+      const url = "http://localhost:8080/user/login";
       $("#register").click(() => {
         window.location.href = "./register.html";
       });
@@ -83,11 +88,7 @@
         let pass = $("#password").val();
         if (validateEmail(email) && pass.length > 3) {
           $("#error").text("");
-          console.log(`${email} and password is ${pass}`);
-          $.get(url, (data, status) => {
-            console.log(status);
-            console.log(data);
-          });
+          postReq({ id: 1, email: email, password: `${password}` });
         } else {
           $("#error").text("Not a valid email address or password");
         }
@@ -98,6 +99,23 @@
           .match(
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           );
+      };
+      const postReq = ({ email, password }) => {
+        $.ajax({
+          contentType: "application/json",
+          success: (data) => {
+            console.log(data);
+            if (email.length > 2) {
+              localStorage.setItem("id", id);
+              localStorage.setItem("email", email);
+            }
+            // window.location.reload();
+          },
+          error: (error) => $("#error").html(error),
+          processData: false,
+          type: "POST",
+          url: `${url}?email=${email}&password=${password}`,
+        });
       };
     </script>
   </body>

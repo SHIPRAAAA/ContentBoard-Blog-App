@@ -37,4 +37,7 @@ public class JobModel {
 	@Column(name = "exp", nullable = false)
 	private Integer exp;
 
+	@Column(name = "email")
+	private Integer email;
+
 }

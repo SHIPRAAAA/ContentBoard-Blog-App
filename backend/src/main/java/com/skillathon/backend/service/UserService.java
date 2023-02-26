@@ -1,7 +1,6 @@
 package com.skillathon.backend.service;
 
-import java.util.List;
-
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.skillathon.backend.model.UserModel;
@@ -34,6 +33,10 @@ public class UserService {
 		UserModel userCreated = userRepository.save(user);
 		userCreated.setPassword(null);
 		return userCreated;
+	}
+
+	public Optional<UserModel> findbyEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 
 	public void deleteUser(long id) {
