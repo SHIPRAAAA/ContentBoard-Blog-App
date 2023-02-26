@@ -30,6 +30,7 @@ public class UserService {
 	}
 
 	public UserModel addUser(UserModel user) {
+		user.setId(userRepository.findTopByOrderByDesc().getId() + 1);
 		UserModel userCreated = userRepository.save(user);
 		userCreated.setPassword(null);
 		return userCreated;
@@ -45,6 +46,8 @@ public class UserService {
 	}
 
 	public UserModel updateUser(UserModel user) {
-		return addUser(user);
+		UserModel userCreated = userRepository.save(user);
+		userCreated.setPassword(null);
+		return userCreated;
 	}
 }
