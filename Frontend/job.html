@@ -16,18 +16,72 @@
       integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
       crossorigin="anonymous"
     ></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        width: 94vw;
+        padding: 1vw;
+        margin: 1vw;
+        overflow-x: hidden;
+        color: black;
+      }
+      .job {
+        padding: 4rem;
+        margin: 2rem;
+        width: 60rem;
+        border-radius: 49px;
+        background: #e0e0e0;
+        box-shadow: inset -43px 43px 86px #bebebe, inset 43px -43px 86px #ffffff;
+      }
+      a,p{
+        font-size: medium;
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
-      <h1>The jobs posted here will be listed below</h1>
+    <div
+      class="container d-flex justify-content-center align-items-center flex-column m-2 p-2"
+      id="container"
+    >
+      <h1 class="">Jobs<h1>
+      <button class="btn btn-primary" id="auth"></button>
+
       <div class="job-lists" id="job-lists"></div>
     </div>
 
     <script>
-      url = `http://localhost:8080/job`;
+      let dataGlobal;
+      //auth button
+      $("#auth")
+        .text(localStorage.getItem("email") ? "Sign Out" : "Log in")
+        .click(() => {
+          if (localStorage.getItem("email")) {
+            localStorage.removeItem("email");
+            window.location.reload();
+          } else window.location.href = "./index.html";
+        });
+      //get req
+      const url = `http://localhost:8080/job`;
       $.get(url, (data, status) => {
-        if (status == "success")
-          data.map((item) => $("#job-lists").append(generateHtml(item)));
+        if (status == "success") {
+          dataGlobal = data;
+          checkParam(data);
+        }
       });
       const generateHtml = ({
         id,
@@ -37,14 +91,32 @@
         salary,
         exp,
       }) =>
-        `<div id="job-${id}">
-            <h1 id="companyId-${id}">${company}-${id}</h1>
-            <h3 class="jobTitle" id="jobTitle-${id}">${jobTitle}</h3>
-            <h3 class="salary" id="salary-${id}">${salary}</h3>
-            <h3 class="exp" id="exp-${id}">${exp}</h3>
+        `<div id="job-${id}" class="job">
+            <h2 id="companyId-${id}">Company - ${company}-${id}</h2>
+            <h4 class="jobTitle" id="jobTitle-${id}">Job Title -${jobTitle}</h4>
+            <h4 class="salary" id="salary-${id}">Expected Salary - ${salary}</h4>
+            <h4 class="exp" id="exp-${id}">Expereience - ${exp}</h4>
+            <a href="./job.html?id=${id}" >Know more</a>
             <p class="jobDescription" id="jobDescription-${id}">${jobDescription}</p>
         </div>
         `;
+      //is search params exist and generate html
+      const checkParam = (data) => {
+        const searchParam = new URLSearchParams(window.location.search);
+        if (searchParam.has("id")) {
+          let idx = data.findIndex(
+            (x) => parseInt(x.id) === parseInt(searchParam.get("id"))
+          );
+          if (typeof data[idx] !== -1)
+            $("#container").html(generateHtml(data[idx]) + ``);
+          else
+            $("#container").html(
+              `<h1 class="text-danger text-center">Not found</h1>`
+            );
+        } else {
+          data.map((item) => $("#job-lists").append(generateHtml(item)));
+        }
+      };
     </script>
   </body>
 </html>
